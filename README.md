@@ -25,6 +25,6 @@ Hipster will create time-based data for Splunk to ingest and is meant only to ge
 
 In fact the inputs.conf will put the data into an index called junk by default so that data can easily be cleared from the system to run new tests & be captured by Splunk licensing for easier measurement.
 
-With a 1 minute interval setting & 5MB dictionary file a single forwarder will generated approximatley 25-30GB of ingest per day.
+This provided file will create about 20GB/day from a forwarder with the interval set at 30s
 
 Once deployed & provided with a dictionary & updated outputs file the script will generate load automatically 
