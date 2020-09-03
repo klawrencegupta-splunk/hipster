@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hipster-deployment
+  labels:
+    app: hipster
+spec:
+  replicas: 25
+  selector:
+    matchLabels:
+      app: hipster
+  template:
+    metadata:
+      labels:
+        app: hipster
+    spec:
+      containers:
+      - name: splunk-uf
+        image: splunk/universalforwarder:latest
+        imagePullPolicy: Always
+        env:
+        - name: SPLUNK_START_ARGS
+          value: --accept-license
+        - name: SPLUNK_PASSWORD
+          value: helloworld
+        volumeMounts:
+        - mountPath: /opt/splunkforwarder/etc/apps/
+          name: apps
+      volumes:
+        - name: apps
+          hostPath:
+            path: /apps
+            type: Directory
