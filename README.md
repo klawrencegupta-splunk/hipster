@@ -67,7 +67,7 @@ To configure Hipster for load you need to modify 3 files
 - inputs.conf will control the interval as which you want that dict file to be read - the default is 10 seconds
 - outputs.conf will need to contain the IPs of the indexers you want to send data
 
-#The formula to determine the amount of load you want to generate is:
+# The formula to determine the amount of load you want to generate is:
     (number of hipster containers	* run intervals per day	* size dictionary in kb)/1024/1024 = Total GB/day load for all hipster containers
     - example: 75 hipster nodes x 1440 (or 60 second intervals) x 1000k sized dict = ~105GB of daily load
     
