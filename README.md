@@ -25,6 +25,44 @@ Hipster will create time-based data for Splunk to ingest and is meant only to ge
 
 In fact the inputs.conf will put the data into an index called junk by default so that data can easily be cleared from the system to run new tests & be captured by Splunk licensing for easier measurement.
 
-This provided file will create about 20GB/day from a forwarder with the interval set at 30s
+This provided file will create about 20GB/day from a single forwarder with the interval set at 30s
 
 Once deployed & provided with a dictionary & updated outputs file the script will generate load automatically 
+
+To scale out a hipster test to more nodes I suggest the following procedure to deploy multiple forwarders within a Kubernetes deployment
+
+*Hipster Load Generation Steps*
+
+Host suggestion: m5.xlarge+ for 75 nodes and greater and I run this on Ubuntu 20.04
+
+Setup the Kubes Cluster & configue with DNS/Storage support and configure the following
+
+sudo snap install microk8s --classic --channel=1.18/stable
+sudo usermod -a -G microk8s <username>
+sudo chown -f -R <username> ~/.kube
+sudo snap alias microk8s.kubectl kubectl
+
+Log-off and then run these additional configurations for the cluster
+
+microk8s enable dns
+microk8s enable storage
+
+This will setup the basic kubes cluster with enough network and storage to get started
+
+In this case since we are using a hostPath configuration to share the directory /apps with each container we deploy in the /opt/splunkforwarder/apps directory so that apps can be mapped directly we need to take the following additional steps
+
+sudo mkdir /apps
+cd /apps
+sudo wget https://codeload.github.com/klawrencegupta-splunk/hipster/zip/master
+sudo mv master master.zip; sudo unzip master.zip; sudo mv hipster-master/ hipster
+
+
+Once the /apps directory is staged and has your apps deployed we can deploy the follwowing yaml as a kubes Deployment by using the hipster.yaml file provided
+
+kubectl apply -f hipster.yaml
+
+To configure Hipster for load you need to modify 3 files
+
+- dict is the sample of data you want to send - dict.dict is given as a neutral sample of simple apache data for testing
+- inputs.conf will control the interval as which you want that dict file to be read - the default is 10 seconds
+- outputs.conf will need to contain the IPs of the indexers you want to send data
