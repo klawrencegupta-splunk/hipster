@@ -37,15 +37,15 @@ Host suggestion: m5.xlarge+ for 75 nodes and greater and I run this on Ubuntu 20
 
 Setup the Kubes Cluster & configue with DNS/Storage support and configure the following
 
-sudo snap install microk8s --classic --channel=1.18/stable
-sudo usermod -a -G microk8s <username>
-sudo chown -f -R <username> ~/.kube
-sudo snap alias microk8s.kubectl kubectl
+- sudo snap install microk8s --classic --channel=1.18/stable
+- sudo usermod -a -G microk8s <username>
+- sudo chown -f -R <username> ~/.kube
+- sudo snap alias microk8s.kubectl kubectl
 
 Log-off and then run these additional configurations for the cluster
 
-microk8s enable dns
-microk8s enable storage
+- microk8s enable dns
+- microk8s enable storage
 
 This will setup the basic kubes cluster with enough network and storage to get started
 
