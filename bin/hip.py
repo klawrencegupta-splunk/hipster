@@ -39,9 +39,9 @@ def generate_load():
     for i in makesomejunk(l,x):
         for line in i:
             str(line)
-            if len(line)>0:
-                logme = (str(tds()) + "   " + line + '\n')
-		print(logme)
+        if len(line)>0:
+           logme = (str(tds()) + "   " + line + '\n')
+           print(logme)
 
 
 # Defines the load factor from above - iterative loop
