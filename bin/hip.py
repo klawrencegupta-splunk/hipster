@@ -31,7 +31,7 @@ def tds():
 
 # Actually makes the junk
 def makesomejunk(l,x):
-    for i in xrange(0, len(l), x):
+    for i in range(0, len(l), x):
         yield l[i:i+x]
 
 # Main function
